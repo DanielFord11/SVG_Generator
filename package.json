@@ -1,5 +1,7 @@
 {
+  "type": "module",
   "dependencies": {
+    "@svgdotjs/svg.js": "^3.2.0",
     "inquirer": "^9.2.7",
     "svgdom": "^0.1.14"
   }
