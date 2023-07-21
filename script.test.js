@@ -1,28 +1,42 @@
-import inquirer from 'inquirer';
-import { createSVGWindow } from 'svgdom';
-import { SVG, registerWindow } from '@svgdotjs/svg.js';
-import fs from 'fs';
+import { SVG } from '@svgdotjs/svg.js';
+import { Circle, Triangle, Square } from './index.js'; 
 
-const window = createSVGWindow();
-const document = window.document;
+describe('Shape subclasses', () => {
+  test('Circle creates a valid SVG circle', () => {
+    const draw = SVG(document.createElement('svg'));
+    const circle = new Circle(draw, 'red');
+    circle.createShape();
 
-registerWindow(window, document);
+    const svgElement = draw.node.querySelector('circle');
+    expect(svgElement).toBeDefined();
+    expect(svgElement.getAttribute('cx')).toEqual('150');
+    expect(svgElement.getAttribute('cy')).toEqual('50');
+    expect(svgElement.getAttribute('r')).toEqual('100');
+    expect(svgElement.getAttribute('fill')).toEqual('red');
+  });
 
-test('init function should generate SVG logo file', async () => {
-  // Mock the user input
-  const answers = {
-    companyName: 'Test Company',
-    textColor: 'red',
-    shape: 'circle',
-    shapeColor: 'blue',
-  };
-  inquirer.prompt.mockResolvedValue(answers);
+  test('Triangle creates a valid SVG polygon', () => {
+    const draw = SVG(document.createElement('svg'));
+    const triangle = new Triangle(draw, 'blue');
+    triangle.createShape();
 
-  // Call the function
-  await init();
+    const svgElement = draw.node.querySelector('polygon');
+    expect(svgElement).toBeDefined();
+    expect(svgElement.getAttribute('points')).toEqual('50,0 100,100 0,100');
+    expect(svgElement.getAttribute('fill')).toEqual('blue');
+  });
 
-  // Verify the expected behavior and output
-  expect(fs.writeFileSync).toHaveBeenCalledWith('logo.svg', expect.any(String));
-  expect(console.log).toHaveBeenCalledWith('Generated logo.svg');
+  test('Square creates a valid SVG rectangle', () => {
+    const draw = SVG(document.createElement('svg'));
+    const square = new Square(draw, 'green');
+    square.createShape();
+
+    const svgElement = draw.node.querySelector('rect');
+    expect(svgElement).toBeDefined();
+    expect(svgElement.getAttribute('x')).toEqual('150');
+    expect(svgElement.getAttribute('y')).toEqual('50');
+    expect(svgElement.getAttribute('width')).toEqual('100');
+    expect(svgElement.getAttribute('height')).toEqual('100');
+    expect(svgElement.getAttribute('fill')).toEqual('green');
+  });
 });
-  
