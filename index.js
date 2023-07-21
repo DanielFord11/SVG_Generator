@@ -3,6 +3,40 @@ import { createSVGWindow } from 'svgdom';
 import { SVG, registerWindow } from '@svgdotjs/svg.js';
 import fs from 'fs';
 
+// Define the Shape class
+class Shape {
+  constructor(draw, shapeColor) {
+    this.draw = draw;
+    this.shapeColor = shapeColor;
+    this.shape = null;
+  }
+
+  createShape() {
+    // To be implemented in subclasses
+  }
+}
+
+// Define the Circle class as a subclass of Shape
+class Circle extends Shape {
+  createShape() {
+    this.shape = this.draw.circle(100).fill(this.shapeColor).move(150, 50);
+  }
+}
+
+// Define the Triangle class as a subclass of Shape
+class Triangle extends Shape {
+  createShape() {
+    this.shape = this.draw.polygon('50,0 100,100 0,100').fill(this.shapeColor).move(150, 50);
+  }
+}
+
+// Define the Square class as a subclass of Shape
+class Square extends Shape {
+  createShape() {
+    this.shape = this.draw.rect(100, 100).fill(this.shapeColor).move(150, 50);
+  }
+}
+
 const window = createSVGWindow();
 const document = window.document;
 
@@ -42,12 +76,14 @@ function init() {
   
     let shape;
     if (answers.shape === 'circle') {
-      shape = draw.circle(100).fill(answers.shapeColor).move(150, 50);
+      shape = new Circle(draw, answers.shapeColor);
     } else if (answers.shape === 'triangle') {
-      shape = draw.polygon('50,0 100,100 0,100').fill(answers.shapeColor).move(150, 50);
+      shape = new Triangle(draw, answers.shapeColor);
     } else if (answers.shape === 'square') {
-      shape = draw.rect(100, 100).fill(answers.shapeColor).move(150, 50);
+      shape = new Square(draw, answers.shapeColor);
     }
+
+    shape.createShape();
   
     const svgMarkup = draw.svg();
     fs.writeFileSync('logo.svg', svgMarkup);
