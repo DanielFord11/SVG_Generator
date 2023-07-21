@@ -1,5 +1,5 @@
-import { SVG } from '@svgdotjs/svg.js';
-import { Circle, Triangle, Square } from './index.js'; 
+const { SVG } = require('@svgdotjs/svg.js');
+const { Circle, Triangle, Square } = require('./index.js'); // Replace './index.js' with the correct path to the file containing the classes.
 
 describe('Shape subclasses', () => {
   test('Circle creates a valid SVG circle', () => {
