@@ -1,7 +1,7 @@
-import inquirer from 'inquirer';
-import { createSVGWindow } from 'svgdom';
-import { SVG, registerWindow } from '@svgdotjs/svg.js';
-import fs from 'fs';
+const inquirer = require('inquirer');
+const { createSVGWindow } = require('svgdom');
+const { SVG, registerWindow } = require('@svgdotjs/svg.js');
+const fs = require('fs');
 
 // Define the Shape class
 class Shape {
@@ -42,9 +42,9 @@ const document = window.document;
 
 registerWindow(window, document);
 
-// TODO: Create a function to initialize app
+// Create a function to initialize app
 function init() {
-  // TODO: Create an array of questions for user input
+  // Create an array of questions for user input
   const questions = [
     {
       type: 'input',
@@ -94,5 +94,5 @@ function init() {
   });
 }
 
-// Function call to initialize app
-init();
+// Export the classes and the init function
+module.exports = { Shape, Circle, Triangle, Square, init };
